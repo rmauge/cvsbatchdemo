@@ -33,10 +33,10 @@ import javax.sql.DataSource;
 public class OrderConfiguration {
 
     @Autowired
-    JobBuilderFactory jobBuilderFactory;
+    public JobBuilderFactory jobBuilderFactory;
 
     @Autowired
-    StepBuilderFactory stepBuilderFactory;
+    public StepBuilderFactory stepBuilderFactory;
 
     @Value("${usage.file.name:classpath:orders.json}")
     private Resource usageResource;
