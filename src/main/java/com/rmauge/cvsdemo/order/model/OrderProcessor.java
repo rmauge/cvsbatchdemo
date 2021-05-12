@@ -1,4 +1,4 @@
-package com.rmauge.cvsdemo.order;
+package com.rmauge.cvsdemo.order.model;
 
 import org.springframework.batch.item.ItemProcessor;
 

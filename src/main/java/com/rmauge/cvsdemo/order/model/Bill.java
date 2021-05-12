@@ -1,4 +1,4 @@
-package com.rmauge.cvsdemo.order;
+package com.rmauge.cvsdemo.order.model;
 
 public class Bill {
     private Long id;

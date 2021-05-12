@@ -1,6 +1,9 @@
-package com.rmauge.cvsdemo.order;
+package com.rmauge.cvsdemo.order.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rmauge.cvsdemo.order.model.Bill;
+import com.rmauge.cvsdemo.order.model.Order;
+import com.rmauge.cvsdemo.order.model.OrderProcessor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -16,16 +19,17 @@ import org.springframework.batch.item.json.JacksonJsonObjectReader;
 import org.springframework.batch.item.json.JsonItemReader;
 import org.springframework.batch.item.json.builder.JsonItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.task.configuration.EnableTask;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import javax.sql.DataSource;
 
 @Configuration
-@EnableBatchProcessing
 @EnableTask
+@EnableBatchProcessing
 public class OrderConfiguration {
 
     @Autowired
@@ -33,6 +37,9 @@ public class OrderConfiguration {
 
     @Autowired
     StepBuilderFactory stepBuilderFactory;
+
+    @Value("${usage.file.name:classpath:orders.json}")
+    private Resource usageResource;
 
     @Bean
     public JsonItemReader<Order> jsonItemReader() {
@@ -43,7 +50,7 @@ public class OrderConfiguration {
 
         return new JsonItemReaderBuilder<Order>()
                 .jsonObjectReader(jsonObjectReader)
-                .resource(new ClassPathResource("orders.json"))
+                .resource(usageResource)
                 .name("OrderJsonItemReader")
                 .build();
     }
